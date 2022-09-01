@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import './products.css';
 import product1 from './assets/shoes.webp';
 import product2 from './assets/product2.webp';
@@ -55,4 +56,14 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;;
+
+function mapStateToProps(state) {
+    const category = state.shoppingCart.category;
+    const cart = state.shoppingCart.cart;
+    return {
+        category,
+        cart
+    };
+}
+
+export default connect(mapStateToProps)(Navbar);
