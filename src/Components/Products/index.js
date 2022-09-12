@@ -5,6 +5,7 @@ import product1 from './assets/shoes.webp';
 import product2 from './assets/product2.webp';
 import cart from './assets/cart-icon.png';
 import actions from '../../Actions';
+import ProductCart from '../ProductCard';
 
 class Navbar extends Component {
     constructor(props) {
@@ -21,41 +22,13 @@ class Navbar extends Component {
                     Category Names
                 </p>
                 <div className="container-products">
-                    <div className="card-item">
-                        <div className="container-product-img">
-                            <img src={product1} alt="product" className="card-img" />
-                        </div>
-                        <p className="product-name">Apollo Running Short</p>
-                        <p className="product-price">$50.00</p>
-                        <img src={cart} className="icon-addToCart" alt="empty cart" />
-                    </div>
-                    <div className="card-item">
-                        <div className="container-product-img">
-                            <img src={product2} alt="product" className="card-img" />
-                        </div>
-                        <p className="product-name">Apollo Running Short</p>
-                        <p className="product-price">$50.00</p>
-                        <img src={cart} className="icon-addToCart" alt="empty cart" />
-                    </div>
-                    <div className="card-item">
-                        <div className="container-product-img">
-                            <img src={product1} alt="product" className="card-img" />
-                        </div>
-                        <p className="product-name">Apollo Running Short</p>
-                        <p className="product-price">$50.00</p>
-                        <img src={cart} className="icon-addToCart" alt="empty cart" />
-                    </div>
-                    <div className="card-item">
-                        <div className="container-product-img">
-                            <img src={product1} alt="product" className="card-img" />
-                        </div>
-                        <p className="product-name">Apollo Running Short</p>
-                        <p className="product-price">$50.00</p>
-                        <img src={cart} className="icon-addToCart" alt="empty cart" />
-                    </div>
-                    <div className="card-item"></div>
+                    <ProductCart img={product1} product_name="Apollo Running Short" product_price="50.00$" />
+                    <ProductCart img={product2} product_name="Apollo Running Short" product_price="50.00$" />
+                    <ProductCart img={product1} product_name="Apollo Running Short" product_price="50.00$" />
+                    <ProductCart img={product2} product_name="Apollo Running Short" product_price="50.00$" />
+                    <ProductCart img={product1} product_name="Apollo Running Short" product_price="50.00$" />
                 </div>
-            </div>
+            </div >
         );
     }
 }
