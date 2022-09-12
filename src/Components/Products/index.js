@@ -4,10 +4,14 @@ import './products.css';
 import product1 from './assets/shoes.webp';
 import product2 from './assets/product2.webp';
 import cart from './assets/cart-icon.png';
+import actions from '../../Actions';
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
+        console.log(actions, 'action');
+        console.log(props, 'pros');
+        props.dispatch(actions.generalSettingAction.set_category('mostafa'));
     }
     state = {};
     render() {
@@ -58,11 +62,11 @@ class Navbar extends Component {
 
 
 function mapStateToProps(state) {
-    const category = state.shoppingCart.category;
-    const cart = state.shoppingCart.cart;
+    const shoppingCart = state.shoppingCart;
+    const generalSetting = state.generalSetting;
     return {
-        category,
-        cart
+        shoppingCart,
+        generalSetting
     };
 }
 

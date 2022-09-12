@@ -1,3 +1,4 @@
 import shoppingCartAction from "./shoppingCartAction";
+import generalSettingAction from "./generalSettingAction";
 
-export default shoppingCartAction;
+export default { shoppingCartAction, generalSettingAction };

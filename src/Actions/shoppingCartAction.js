@@ -1,24 +1,19 @@
-const set_category = () => {
+const add_to_cart = (item) => {
     return {
-        type: "SET_CATEGORY"
-    };
-};
-
-const add_to_cart = () => {
-    return {
-        type: "ADD_TO_CART"
+        type: "ADD_TO_CART",
+        payload: item
     };
 };
 
 
-const remove_from_cart = () => {
+const remove_from_cart = (id) => {
     return {
-        type: "REMOVE_FROM_CART"
+        type: "REMOVE_FROM_CART",
+        payload: id
     };
 };
 
 export default {
-    set_category,
     add_to_cart,
     remove_from_cart
 };
