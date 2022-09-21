@@ -1,0 +1,77 @@
+.shopping-list-screen {
+    padding: 0 5%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+
+hr {
+    width: 100%;
+}
+
+
+.product-in-cart {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cart-text {
+
+    /* Heading / Desktop / H2 */
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    margin: 60px 5%;
+
+    /* identical to box height, or 67px */
+    display: flex;
+    align-items: center;
+
+    /* --c-text */
+    color: #1D1F22;
+}
+
+.total-statistics {
+    display: flex;
+    flex-direction: column;
+}
+
+.tax,
+.total-quantity,
+.total-price {
+    position: relative;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    margin: 10px 0px;
+    text-align: left;
+}
+
+.tax-value,
+.total-quantity-value,
+.total-price-value {
+    position: absolute;
+    left: 200px;
+    display: inline;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    margin: 0 10px;
+}
+
+.btn-order {
+    width: 300px;
+    height: 43px;
+    background-color: #5ECE7B;
+    border: none;
+    color: white;
+    margin: 40px 0px;
+}
