@@ -1,18 +1,13 @@
-* {
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 120%;
-}
-
-.container-product:hover~.icon-addToCart,
-.product-name:hover~.icon-addToCart,
-.product-price:hover~.icon-addToCart,
-.container-product-img:hover~.icon-addToCart,
+.container-product:hover~.link .icon-addToCart,
+.product-name:hover~.link .icon-addToCart,
+.product-price:hover~.link .icon-addToCart,
+.container-product-img:hover~.link .icon-addToCart,
+.link:hover,
 .icon-addToCart:hover {
     visibility: visible;
 }
+
+
 
 
 .card-item {
@@ -40,12 +35,12 @@
 }
 
 .card-img {
-    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
 
-.product-name {
+.product-card-name {
     width: 100%;
     text-align: left;
     font-family: 'Raleway';
@@ -58,7 +53,7 @@
     margin: 0;
 }
 
-.product-price {
+.product-card-price {
     width: 100%;
     text-align: left;
     font-family: 'Raleway';

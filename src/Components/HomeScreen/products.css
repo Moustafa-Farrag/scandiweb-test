@@ -1,25 +1,8 @@
-* {
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 120%;
-}
-
-
 .container-products {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
     margin: 5%;
-}
-
-.container-product:hover~.icon-addToCart,
-.product-name:hover~.icon-addToCart,
-.product-price:hover~.icon-addToCart,
-.container-product-img:hover~.icon-addToCart,
-.icon-addToCart:hover {
-    visibility: visible;
 }
 
 .category-text {
@@ -38,6 +21,7 @@
 
     /* --c-text */
     color: #1D1F22;
+    text-transform: capitalize;
 }
 
 .card-item {

@@ -50,14 +50,6 @@
     display: flex;
 }
 
-.size-box {
-    width: 65px;
-    height: 45px;
-    border: 1px solid #1D1F22;
-    background-color: white;
-    margin-right: 12px;
-}
-
 
 .size-box-text {
     font-family: Source Sans Pro;

@@ -1,4 +1,4 @@
-const state = (state = { cart: ['hi'] }, action) => {
+const state = (state = { cart: [] }, action) => {
     switch (action.type) {
         case "ADD_TO-CART":
             return { ...state, cart: [...state.cart, action.payload] };

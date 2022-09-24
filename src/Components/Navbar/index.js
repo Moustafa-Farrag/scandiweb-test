@@ -1,21 +1,59 @@
 import React, { Component } from 'react';
-import './Navbar.css';
+import { graphql } from '@apollo/client/react/hoc';
+import { connect } from "react-redux";
+import { getCategoriesNames } from '../../GraphQLQueries';
 import $ from './assets/$.png';
 import logo from './assets/logo.png';
 import cart from './assets/cart-icon.png';
+import './Navbar.css';
+import generalSettingAction from '../../Actions/generalSettingAction';
+import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
+        console.log(props, 'navbar');
+        this.state = {
+            categories: [],
+            selectedCategoryIndex: 0
+        };
     }
-    state = {};
+
+    getNavbarCategories() {
+        if (this.props.getCategoriesNames.loading) {
+            console.log('refused');
+            this.setState({ categories: [] });
+            return;
+        }
+        this.setState({ categories: this.props.getCategoriesNames.categories });
+    }
+
+    handelCategoryOnClick(e, index) {
+        this.setState({ selectedCategoryIndex: index });
+        this.props.dispatch(generalSettingAction.set_category(this.state.categories[index].name));
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.getCategoriesNames.loading !== this.props.getCategoriesNames.loading) {
+            this.getNavbarCategories();
+        }
+    }
+
+    componentDidMount() {
+        this.getNavbarCategories();
+    };
+
+
     render() {
         return (
             <header className="navbar-header">
                 <div className="container-btn-pages">
-                    <button className="btn-category clicked">WOMEN</button>
-                    <button className="btn-category">MEN</button>
-                    <button className="btn-category">KIDS</button>
+                    {this.state.categories.map((category, index) => {
+                        if (index === this.state.selectedCategoryIndex)
+                            return (<button onClick={(e) => this.handelCategoryOnClick(e, index)} className="btn-category clicked" key={index}>{category.name}</button>);
+                        else
+                            return (<button onClick={(e) => this.handelCategoryOnClick(e, index)} className="btn-category" key={index}>{category.name}</button>);
+                    })}
                 </div>
 
                 <div className="logo">
@@ -31,4 +69,13 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+function mapStateToProps(state) {
+    const shoppingCart = state.shoppingCart;
+    const generalSetting = state.generalSetting;
+    return {
+        shoppingCart,
+        generalSetting
+    };
+}
+
+export default graphql(getCategoriesNames, { name: 'getCategoriesNames' })(connect(mapStateToProps)(Navbar));
