@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import ShoppingListItem from "../ShoppinListItem";
+import { connect } from "react-redux";
 import './shoppingListScreen.css';
 
 class ShoppingListScreen extends Component {
     constructor(props) {
         super(props);
     }
-    state = {};
+
     render() {
         return (
             <div>
@@ -15,10 +16,16 @@ class ShoppingListScreen extends Component {
                 </p>
                 <section className="shopping-list-screen">
                     <hr />
-                    <ShoppingListItem brand_name="Apollo" product_name=" Running Short" quantity={2} />
-                    <hr />
-                    <ShoppingListItem brand_name="Apollo" product_name=" Running Short" quantity={2} />
-                    <hr />
+                    {
+                        this.props.shoppingCart.map(item => (
+                            <div>
+                                <ShoppingListItem productData={item.product} selectedAttributes={item.selectedAttributes} />
+                                <hr />
+                            </div>
+                        ))
+                    }
+                    {/*<ShoppingListItem brand_name="Apollo" product_name=" Running Short" quantity={2} />
+                    <hr />*/}
                     <section className="total-statistics">
                         <p className="tax">
                             Tax 21%:
@@ -41,4 +48,14 @@ class ShoppingListScreen extends Component {
     }
 }
 
-export default ShoppingListScreen;
+function mapStateToProps(state) {
+    console.log(state, 'from mapState');
+    const shoppingCart = state.shoppingCart;
+    const generalSetting = state.generalSetting;
+    return {
+        shoppingCart,
+        generalSetting
+    };
+}
+
+export default (connect(mapStateToProps)(ShoppingListScreen));

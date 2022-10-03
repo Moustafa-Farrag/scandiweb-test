@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
+import { Interweave } from 'interweave';
 import ProductGallery from './ProductGallery';
 import getProduct from '../../GraphQLQueries/productQuery';
-import { graphql } from '@apollo/client/react/hoc';
 import client from '../../GraphQLQueries/client';
-import Size from './Attributes/Size';
+import GeneralTextAttributes from './Attributes/GeneralTextAttributes';
+import GeneralSwatchAttributes from './Attributes/GeneralSwatchAttributes';
+import Actions from '../../Actions';
 import './ProductScreen.css';
-import General from './Attributes/General';
-import Color from './Attributes/Color';
 
 class ProductScreen extends Component {
     constructor(props) {
@@ -19,27 +19,27 @@ class ProductScreen extends Component {
             error: false,
             product: {},
             selectedImgIndex: 0,
-            selectedSizeIndex: 0,
         };
-        this.handelImgClick = this.handelImgClick.bind(this);
-        this.handelSizeClick = this.handelSizeClick.bind(this);
-        this.handelAttributeClick = this.handelAttributeClick.bind(this);
+        this.handleImgClick = this.handleImgClick.bind(this);
+        this.handleAttributeClick = this.handleAttributeClick.bind(this);
+        this.handleOrderBtn = this.handleOrderBtn.bind(this);
     }
 
-    handelImgClick(e, index) {
+    handleImgClick(e, index) {
         this.setState({ selectedImgIndex: index });
     }
 
-    handelSizeClick(e, index) {
-        this.setState({ selectedSizeIndex: index });
+    handleAttributeClick(e, id, index) {
+        let selectedAttributes = { ...this.state.selectedAttributes };
+        console.log(id);
+        selectedAttributes[id] = index;
+        console.log(selectedAttributes);
+        this.setState({ selectedAttributes });
     }
 
-    handelAttributeClick(e, id, index) {
-        let attributes = this.state.attributes;
-        console.log(id);
-        attributes[id] = index;
-        console.log(attributes);
-        this.setState({ attributes });
+    handleOrderBtn(e) {
+        console.log(this.state.product, this.state.selectedAttributes);
+        this.props.dispatch(Actions.shoppingCartAction.add_to_cart({ product: { ...this.state.product }, selectedAttributes: { ...this.state.selectedAttributes } }));
     }
 
     async getProductDetails() {
@@ -50,11 +50,11 @@ class ProductScreen extends Component {
             },
         }).then(cu => {
             console.log(cu.data.product.attributes, 'check');
-            let attributes = cu.data.product.attributes.reduce((previousValue, currentValue) => {
+            let selectedAttributes = [...cu.data.product.attributes].reduce((previousValue, currentValue) => {
                 previousValue[currentValue.id] = 0;
                 return previousValue;
             }, {});
-            this.setState({ product: cu.data.product, loading: false, attributes });
+            this.setState({ product: cu.data.product, loading: false, selectedAttributes });
         }
         ).catch(err => console.log(err));
     }
@@ -65,6 +65,9 @@ class ProductScreen extends Component {
             console.log(
                 this.state, 'ffffffff'
             );
+        }
+        if (prevProps !== this.props) {
+            console.log(this.props);
         }
     }
 
@@ -78,7 +81,7 @@ class ProductScreen extends Component {
                 <section className="item-screen">
                     <ProductGallery
                         gallery={this.state.product.gallery}
-                        handleImgClick={this.handelImgClick}
+                        handleImgClick={this.handleImgClick}
                         selectedImgIndex={this.state.selectedImgIndex}
                     />
                     <div className="item-selected-img-cont">
@@ -92,20 +95,17 @@ class ProductScreen extends Component {
                         <p className="product-name-text">
                             {this.state.product.name}
                         </p>
-                        {/*<Size data={this.state.product.attributes[0]}
-                            handelSizeClick={this.handelSizeClick}
-                            selectedSizeIndex={this.state.selectedSizeIndex} /> */}
                         {this.state.product.attributes.map(attribute =>
-                            (attribute.id === 'color') ? (
-                                <General
+                            (attribute.type === 'text') ? (
+                                <GeneralTextAttributes
                                     data={attribute}
-                                    handelAttributeClick={this.handelAttributeClick}
-                                    selectedAttributeIndex={this.state.attributes[attribute.id]}
+                                    handleAttributeClick={this.handleAttributeClick}
+                                    selectedAttributeIndex={this.state.selectedAttributes[attribute.id]}
                                 />) : (
-                                <Color
+                                <GeneralSwatchAttributes
                                     data={attribute}
-                                    handelAttributeClick={this.handelAttributeClick}
-                                    selectedAttributeIndex={this.state.attributes[attribute.id]}
+                                    handleAttributeClick={this.handleAttributeClick}
+                                    selectedAttributeIndex={this.state.selectedAttributes[attribute.id]}
                                 />)
                         )
                         }
@@ -114,14 +114,15 @@ class ProductScreen extends Component {
                             <p className="price-text">price:</p>
                             <p className="price-value-text">50$</p>
                         </section>
-                        <button className="btn-add-to-cart">
-                            <p className="add-to-cart-text">ADD TO CART</p>
+                        <div className="product-order">
+                            <button onClick={this.handleOrderBtn} className="btn-add-to-cart">
+                                <p className="add-to-cart-text">ADD TO CART</p>
+                            </button>
+                        </div>
 
-                        </button>
-
-                        <p className="product-description-text">
-                            {this.state.product.description}
-                        </p>
+                        <div className="product-description-text">
+                            <Interweave content={this.state.product.description} />
+                        </div>
 
                     </div>
                 </section>)
@@ -139,14 +140,5 @@ function mapStateToProps(state) {
     };
 }
 
-export default /*graphql(getProduct, {
-    name: 'getProduct',
-    options: (props) => {
-        return {
-            variables: {
-                id: props.id
-            }
-        };
-    }
-})*/(connect(mapStateToProps)(ProductScreen));
+export default (connect(mapStateToProps)(ProductScreen));
 

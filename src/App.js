@@ -20,6 +20,9 @@ class App extends Component {
               <Route exact path="/" >
                 <HomeScreen />
               </Route>
+              <Route exact path="/shopping-cart" >
+                <ShoppingListScreen />
+              </Route>
               <Route exact path="/product/:id" render={({ match }) => (
                 <ProductScreen id={match.params.id} />)} />
             </Switch>

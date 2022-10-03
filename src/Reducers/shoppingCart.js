@@ -1,13 +1,15 @@
-const state = (state = { cart: [] }, action) => {
+const state = (shoppingCart = [], action) => {
     switch (action.type) {
-        case "ADD_TO-CART":
-            return { ...state, cart: [...state.cart, action.payload] };
+        case "ADD_TO_CART":
+            console.log(shoppingCart, action.type, 'from state');
+            return [...shoppingCart, action.payload];
         case "REMOVE_FROM_CART":
-            return { ...state, cart: state.cart.filter((item) => item.id !== action.payload) };
+            return shoppingCart.filter((item) => item.id !== action.payload);
         case "UPDATE_CART_ITEM":
-            return { ...state };
+            return [...shoppingCart];
         default:
-            return state;
+            console.log(shoppingCart, action.type, 'from state def');
+            return shoppingCart;
     }
 };
 

@@ -28,6 +28,7 @@
 }
 
 .container-icons {
+    position: relative;
     justify-content: flex-end;
 }
 
@@ -61,4 +62,55 @@
 
 .icon {
     margin: 10px;
+}
+
+.link-shopping-cart {
+    position: relative;
+}
+
+.shopping-cart-value {
+    position: absolute;
+    background-color: #1D1F22;
+    color: aliceblue;
+    border-radius: 50%;
+    padding: 1px;
+    z-index: 1;
+    left: 25px;
+    bottom: 7.5px;
+    width: 15px;
+    height: 15px;
+    font-size: small;
+}
+
+.dropdown-currencies {
+    position: absolute;
+    top: 50px;
+    right: -10px;
+    width: 114px;
+    margin: 10px;
+    background-color: #FFFFFF;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.currency-item {
+    width: 114px;
+    height: 52px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.currency-text {
+    font-family: Raleway;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: right;
+    margin: auto;
+}
+
+
+.currency-item:hover {
+    background-color: #EEEEEE;
 }

@@ -15,6 +15,7 @@ class HomeScreen extends Component {
         this.state = {
             products: []
         };
+        this.fetchAllProducts = this.fetchAllProducts.bind(this);
     }
 
     async fetchAllProducts() {
@@ -50,7 +51,7 @@ class HomeScreen extends Component {
                 </p>
                 <div className="container-products">
                     {
-                        this.state.products.map(product => <ProductCart id={product.id} img={product.gallery[0]} product_name={product.name} product_price="50.00$" />)
+                        this.state.products.map(product => <ProductCart product={product} />)
                     }
                 </div>
             </div >

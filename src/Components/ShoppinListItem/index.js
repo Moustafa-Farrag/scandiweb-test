@@ -1,23 +1,64 @@
 import React, { Component } from "react";
-//import './ShoppingListItem.css';
+import GeneralTextAttributes from "../ProductScreen/Attributes/GeneralTextAttributes";
+import GeneralSwatchAttributes from "../ProductScreen/Attributes/GeneralSwatchAttributes";
+import { connect } from "react-redux";
+import './ShoppingListItem.css';
 
 class ShoppingListItem extends Component {
     constructor(props) {
         super(props);
+        console.log(props, 'propssssssssssssssssssssssssss');
+        this.handleAttributeClick = this.handleAttributeClick.bind(this);
     }
-    state = {};
+
+    handleAttributeClick(e, productId, id, index) {
+        /* let attributes = this.state.attributes;
+         console.log(id);
+         attributes[id] = index;
+         console.log(attributes);
+         this.setState({ attributes }); */
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps !== this.props) {
+            console.log(this.props);
+        }
+    }
+
+    componentDidMount() {
+        //this.getProductDetails();
+    }
+
     render() {
         return (
             <div className="cart-container">
                 <div className="product-in-cart">
                     <section className="product-details">
                         <p className="product-brand-text">
-                            {this.props.brand_name}
+                            {this.props.productData.brand_name}
                         </p>
                         <p className="product-name-text">
-                            {this.props.product_name}
+                            {this.props.productData.product_name}
                         </p>
                         <p className="price-value-text">50$</p>
+                        { /*
+                            this.props.shoppingCart.cart.products.map(item =>
+                                (item.attribute.type === 'text') ? (
+                                    <GeneralTextAttributes
+                                        data={item.attribute}
+                                        handleAttributeClick={this.handleAttributeClick}
+                                        selectedAttributeIndex={this.state.attributes[attribute.id]}
+                                    />) : (
+                                    <GeneralSwatchAttributes
+                                        data={item.attribute}
+                                        handleAttributeClick={this.handleAttributeClick}
+                                        selectedAttributeIndex={this.state.attributes[attribute.id]}
+                                    />)
+                            )
+                                    */}
+                        {
+                            //                            this.props.ShoppingListItem.products.map(item => console.log(item))
+                        }
                         <section className="product-size">
                             <p className="size-text">
                                 size:
@@ -48,15 +89,9 @@ class ShoppingListItem extends Component {
                     </section>
                     <section className="quantity-imgs">
                         <section className="product-quantity">
-                            <div className="btn-increasing-quantity">
-                                +
-                            </div>
-                            <p className="product-quantity-value">
-                                {this.props.quantity}
-                            </p>
-                            <div className="btn-decreasing-quantity">
-                                -
-                            </div>
+                            <div className="btn-increasing-quantity">+</div>
+                            <p className="product-quantity-value">2</p>
+                            <div className="btn-decreasing-quantity">-</div>
                         </section>
                         <div className="product-imgs">
 
@@ -69,4 +104,14 @@ class ShoppingListItem extends Component {
     }
 }
 
-export default ShoppingListItem;
+function mapStateToProps(state) {
+    console.log(state, 'from mapState');
+    const shoppingCart = state.shoppingCart;
+    const generalSetting = state.generalSetting;
+    return {
+        shoppingCart,
+        generalSetting
+    };
+}
+
+export default (connect(mapStateToProps)(ShoppingListItem));
