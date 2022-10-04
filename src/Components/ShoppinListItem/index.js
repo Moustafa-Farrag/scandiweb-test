@@ -35,31 +35,31 @@ class ShoppingListItem extends Component {
                 <div className="product-in-cart">
                     <section className="product-details">
                         <p className="product-brand-text">
-                            {this.props.productData.brand_name}
+                            {this.props.product.brand}
                         </p>
                         <p className="product-name-text">
-                            {this.props.productData.product_name}
+                            {this.props.product.name}
                         </p>
                         <p className="price-value-text">50$</p>
-                        { /*
-                            this.props.shoppingCart.cart.products.map(item =>
-                                (item.attribute.type === 'text') ? (
+                        {
+                            this.props.product.attributes.map(attribute =>
+                                (attribute.type === 'text') ? (
                                     <GeneralTextAttributes
-                                        data={item.attribute}
+                                        data={attribute}
                                         handleAttributeClick={this.handleAttributeClick}
                                         selectedAttributeIndex={this.state.attributes[attribute.id]}
                                     />) : (
                                     <GeneralSwatchAttributes
-                                        data={item.attribute}
+                                        data={attribute}
                                         handleAttributeClick={this.handleAttributeClick}
                                         selectedAttributeIndex={this.state.attributes[attribute.id]}
                                     />)
                             )
-                                    */}
+                        }
                         {
                             //                            this.props.ShoppingListItem.products.map(item => console.log(item))
                         }
-                        <section className="product-size">
+                        {/*<section className="product-size">
                             <p className="size-text">
                                 size:
                             </p>
@@ -85,7 +85,7 @@ class ShoppingListItem extends Component {
                                 <div className="color-box"></div>
                                 <div className="color-box"></div>
                             </div>
-                        </section>
+                        </section>*/}
                     </section>
                     <section className="quantity-imgs">
                         <section className="product-quantity">

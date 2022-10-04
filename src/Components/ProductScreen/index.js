@@ -29,11 +29,10 @@ class ProductScreen extends Component {
         this.setState({ selectedImgIndex: index });
     }
 
-    handleAttributeClick(e, id, index) {
+    handleAttributeClick(e, id, value) {
+        // updating the attributes' obj by the selected value
         let selectedAttributes = { ...this.state.selectedAttributes };
-        console.log(id);
-        selectedAttributes[id] = index;
-        console.log(selectedAttributes);
+        selectedAttributes[id] = value;
         this.setState({ selectedAttributes });
     }
 
@@ -45,29 +44,35 @@ class ProductScreen extends Component {
     async getProductDetails() {
         client.query({
             query: getProduct,
-            variables: {
-                id: this.props.id
-            },
+            variables: { id: this.props.id },
         }).then(cu => {
             console.log(cu.data.product.attributes, 'check');
-            let selectedAttributes = [...cu.data.product.attributes].reduce((previousValue, currentValue) => {
-                previousValue[currentValue.id] = 0;
+            /*
+             selected attributes reflect the attributes choices which user took
+             it is an object key => attributes' ids,  value => user choice
+             starting with a empty object and reduce a list to make the attributes obj
+             the default value of any attribute is the first item value
+            */
+            let selectedAttributes = [...cu.data.product.attributes].reduce((previousValue, currentAtt) => {
+                previousValue[currentAtt.id] = currentAtt.items[0].value;
                 return previousValue;
             }, {});
-            this.setState({
-                product: cu.data.product,
-                loading: false, selectedAttributes,
-                productPrice: cu.data.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency))
 
+            // select the price currency of the product depending on the currency of the redux -> currency
+            const productPrice = cu.data.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency));
+
+            // setting the loading, data, attributes' obj and product price
+            this.setState({
+                loading: false,
+                product: cu.data.product,
+                selectedAttributes,
+                productPrice
             });
         }
         ).catch(err => console.log(err));
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.loading !== this.state.loading) {
-            console.log('finish');
-        }
         if (prevProps !== this.props) {
             this.getProductDetails();
         }
@@ -90,7 +95,6 @@ class ProductScreen extends Component {
                         <img src={this.state.product.gallery[this.state.selectedImgIndex]} alt="" className="item-selected-img" />
                     </div>
                     <div className="item-details">
-
                         <p className="product-brand-text">
                             {this.state.product.brand}
                         </p>
@@ -100,14 +104,14 @@ class ProductScreen extends Component {
                         {this.state.product.attributes.map(attribute =>
                             (attribute.type === 'text') ? (
                                 <GeneralTextAttributes
-                                    data={attribute}
+                                    attribute={attribute}
                                     handleAttributeClick={this.handleAttributeClick}
-                                    selectedAttributeIndex={this.state.selectedAttributes[attribute.id]}
+                                    selectedAttributeValue={this.state.selectedAttributes[attribute.id]}
                                 />) : (
                                 <GeneralSwatchAttributes
-                                    data={attribute}
+                                    attribute={attribute}
                                     handleAttributeClick={this.handleAttributeClick}
-                                    selectedAttributeIndex={this.state.selectedAttributes[attribute.id]}
+                                    selectedAttributeValue={this.state.selectedAttributes[attribute.id]}
                                 />)
                         )
                         }

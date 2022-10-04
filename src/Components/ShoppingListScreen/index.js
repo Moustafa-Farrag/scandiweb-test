@@ -19,7 +19,7 @@ class ShoppingListScreen extends Component {
                     {
                         this.props.shoppingCart.map(item => (
                             <div>
-                                <ShoppingListItem productData={item.product} selectedAttributes={item.selectedAttributes} />
+                                <ShoppingListItem product={item.product} selectedAttributes={item.selectedAttributes} />
                                 <hr />
                             </div>
                         ))
