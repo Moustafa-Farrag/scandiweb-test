@@ -7,21 +7,41 @@ import './products.css';
 class ProductCart extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.product, 'product');
+        this.state = {
+            loading: true
+        };
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps !== this.props) {
+            console.log('here', this.props.generalSetting.currency);
+            this.setState({ productPrice: this.props.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency)) });
+            console.log(this.productPrice, 'after here');
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            loading: false,
+            product: this.props.product,
+            productPrice: this.props.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency))
+        });
     }
 
     render() {
         return (
-            <div className="card-item" key={this.props.id}>
-                <div className="container-product-img">
-                    <img src={this.props.product.gallery[0]} alt="product" className="card-img" />
+            (!this.state.loading) ? (
+                <div className="card-item" key={this.state.id}>
+                    <div className="container-product-img">
+                        <img src={this.state.product.gallery[0]} alt="product" className="card-img" />
+                    </div>
+                    <p className="product-card-name">{this.state.product.name}</p>
+                    <p className="product-card-price">{`${this.state.productPrice.amount} ${this.state.productPrice.currency.symbol}`}</p>
+                    <Link className="link" to={"/product/" + this.state.product.id}>
+                        <img src={cart} className="icon-addToCart" alt="cart icon" />
+                    </Link>
                 </div>
-                <p className="product-card-name">{this.props.product.name}</p>
-                <p className="product-card-price">{`${this.props.product.prices[0].amount} ${this.props.product.prices[0].currency.symbol}`}</p>
-                <Link className="link" to={"/product/" + this.props.product.id}>
-                    <img src={cart} className="icon-addToCart" alt="empty cart" />
-                </Link>
-            </div>
+            ) : (<></>)
         );
     }
 }

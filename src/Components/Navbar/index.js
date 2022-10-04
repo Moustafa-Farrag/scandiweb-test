@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { graphql } from '@apollo/client/react/hoc';
 import { connect } from "react-redux";
-import { getCategoriesNames } from '../../GraphQLQueries';
+import { Link } from 'react-router-dom';
+import { getCategoriesNames, getCurrencies } from '../../GraphQLQueries';
+import generalSettingAction from '../../Actions/generalSettingAction';
+import client from '../../GraphQLQueries/client';
 import $ from './assets/$.png';
 import logo from './assets/logo.png';
 import cart from './assets/cart-icon.png';
-import generalSettingAction from '../../Actions/generalSettingAction';
-import { Link } from 'react-router-dom';
-import { getCurrencies } from '../../GraphQLQueries';
-import client from '../../GraphQLQueries/client';
-import './Navbar.css';
+import arrow from './assets/arrow-icon.png';
 import Actions from '../../Actions';
+import './Navbar.css';
 
 class Navbar extends Component {
     constructor(props) {
@@ -84,7 +84,10 @@ class Navbar extends Component {
                 </div>
 
                 <div className="container-icons">
-                    <img src={$} className="icon" alt="currency" onClick={(e) => this.handelCurrencyIconOnClick()} />
+                    <div className='currency-container' onClick={(e) => this.handelCurrencyIconOnClick()}>
+                        <img src={$} className="icon" alt="currency" />
+                        <img src={arrow} className="icon arrow" style={{ transform: (this.state.showCurrencies) ? "rotate(0deg)" : "rotate(180deg)" }} alt="currency" />
+                    </div>
                     <Link className='link-shopping-cart' to='/shopping-cart'>
                         {
                             (this.props.shoppingCart.length) ? (<p className='shopping-cart-value'> {this.props.shoppingCart.length} </p>) : (<></>)
@@ -94,8 +97,8 @@ class Navbar extends Component {
                     < div class="dropdown-currencies" style={{ visibility: (this.state.showCurrencies) ? 'visible' : 'hidden' }} >
                         {
                             this.state.currencies.map(currency => (
-                                <div className='currency-item'>
-                                    <p className='currency-text' onClick={(e) => this.handelCurrencyOptionOnClick(e, currency.label)}>{`${currency.label}  ${currency.symbol}`}</p>
+                                <div className='currency-item' onClick={(e) => this.handelCurrencyOptionOnClick(e, currency.label)}>
+                                    <p className='currency-text'>{`${currency.label}  ${currency.symbol}`}</p>
                                 </div>
                             ))
                         }

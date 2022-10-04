@@ -1,10 +1,25 @@
-.container-product:hover~.link .icon-addToCart,
-.product-card-name:hover~.link .icon-addToCart,
-.product-card-price:hover~.link .icon-addToCart,
-.container-product-img:hover~.link .icon-addToCart,
+.container-product:hover~.link,
+.product-card-name:hover~.link,
+.product-card-price:hover~.link,
+.container-product-img:hover~.link,
 .link:hover,
 .icon-addToCart:hover {
     visibility: visible;
+}
+
+.link {
+    width: 52px;
+    height: 52px;
+    position: absolute;
+    right: 50px;
+    top: 425px;
+    border-radius: 50%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    visibility: hidden;
+    background-color: #5ECE7B;
 }
 
 .card-item:has(.container-product-img:hover) {
@@ -75,15 +90,7 @@
 
 
 .icon-addToCart {
-    position: absolute;
-    right: 50px;
-    top: 425px;
-    background-color: #5ECE7B;
     color: white;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    border: 0;
-    object-fit: none;
-    visibility: hidden;
+    width: 60%;
+    height: 60%;
 }

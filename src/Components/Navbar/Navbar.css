@@ -113,4 +113,13 @@
 
 .currency-item:hover {
     background-color: #EEEEEE;
+    cursor: pointer;
+}
+
+.arrow {
+    margin: 35% 2px;
+}
+
+.currency-container:hover, .icon:hover  {
+    cursor: pointer;
 }

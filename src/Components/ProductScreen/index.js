@@ -54,20 +54,22 @@ class ProductScreen extends Component {
                 previousValue[currentValue.id] = 0;
                 return previousValue;
             }, {});
-            this.setState({ product: cu.data.product, loading: false, selectedAttributes });
+            this.setState({
+                product: cu.data.product,
+                loading: false, selectedAttributes,
+                productPrice: cu.data.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency))
+
+            });
         }
         ).catch(err => console.log(err));
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.loading !== this.state.loading) {
-            // this.setState({ ...this.state, loading: false });
-            console.log(
-                this.state, 'ffffffff'
-            );
+            console.log('finish');
         }
         if (prevProps !== this.props) {
-            console.log(this.props);
+            this.getProductDetails();
         }
     }
 
@@ -112,7 +114,7 @@ class ProductScreen extends Component {
 
                         <section className="product-price">
                             <p className="price-text">price:</p>
-                            <p className="price-value-text">50$</p>
+                            <p className="price-value-text">{`${this.state.productPrice.amount} ${this.state.productPrice.currency.symbol}`}</p>
                         </section>
                         <div className="product-order">
                             <button onClick={this.handleOrderBtn} className="btn-add-to-cart">
