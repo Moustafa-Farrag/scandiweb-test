@@ -13,10 +13,8 @@ class ProductCart extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps !== this.props) {
-            console.log('here', this.props.generalSetting.currency);
+        if (prevProps.generalSetting.currency !== this.props.generalSetting.currency) {
             this.setState({ productPrice: this.props.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency)) });
-            console.log(this.productPrice, 'after here');
         }
     }
 
