@@ -3,13 +3,13 @@ import { graphql } from '@apollo/client/react/hoc';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { getCategoriesNames, getCurrencies } from '../../GraphQLQueries';
-import generalSettingAction from '../../Actions/generalSettingAction';
+import generalSettingAction from '../../redux/Actions/generalSettingAction';
 import client from '../../GraphQLQueries/client';
 import $ from './assets/$.png';
 import logo from './assets/logo.png';
 import cart from './assets/cart-icon.png';
 import arrow from './assets/arrow-icon.png';
-import Actions from '../../Actions';
+import Actions from '../../redux/Actions';
 import './Navbar.css';
 
 class Navbar extends Component {

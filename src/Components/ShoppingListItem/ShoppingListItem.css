@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 .product-brand-text {
@@ -87,6 +88,7 @@
 }
 
 .quantity-imgs {
+    height: 300px;
     display: flex;
 }
 
@@ -104,6 +106,13 @@
     width: 45px;
     height: 45px;
     border: 1px solid #1D1F22;
+    background-color: white;
+    cursor: pointer;
+}
+
+.btn-increasing-quantity:active,
+.btn-decreasing-quantity:active {
+    transform: scale(.98);
 }
 
 .product-quantity-value {
@@ -116,11 +125,16 @@
 
 }
 
-.product-imgs {
+.product-imgs-container {
     float: right;
     width: 200px;
-    background-color: gray;
     margin: auto 0;
     justify-content: flex-end;
     margin: 20px;
+}
+
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }

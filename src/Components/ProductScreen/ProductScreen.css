@@ -90,6 +90,7 @@
 .size-boxes,
 .color-boxes {
     display: flex;
+    cursor: pointer;
 }
 
 .size-box {
@@ -147,6 +148,7 @@
     background-color: #5ECE7B;
     border: none;
     float: left;
+    cursor: pointer;
 }
 
 .btn-add-to-cart:active {

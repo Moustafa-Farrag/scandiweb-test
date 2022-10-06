@@ -5,11 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-//import { createStore } from "redux";
-import rootReducer from "./Reducers";
 import { Provider } from "react-redux";
-
-//const store = createStore(rootReducer);
 
 ReactDOM.render(
     <Provider store={store}>

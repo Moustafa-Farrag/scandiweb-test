@@ -7,6 +7,7 @@ import './products.css';
 class ProductCart extends Component {
     constructor(props) {
         super(props);
+        console.log(props.product, 'hi');
         this.state = {
             loading: true
         };
@@ -15,6 +16,9 @@ class ProductCart extends Component {
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.generalSetting.currency !== this.props.generalSetting.currency) {
             this.setState({ productPrice: this.props.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency)) });
+        }
+        if (prevProps.product !== this.props.product) {
+            this.setState({ product: this.props.product });
         }
     }
 
@@ -30,6 +34,11 @@ class ProductCart extends Component {
         return (
             (!this.state.loading) ? (
                 <div className="card-item" key={this.state.id}>
+                    {
+                        (!this.state.product.inStock) && (<div className='out-of-stock'>
+                            <p className='out-of-stock-text'>OUT OF STOCK</p>
+                        </div>)
+                    }
                     <div className="container-product-img">
                         <img src={this.state.product.gallery[0]} alt="product" className="card-img" />
                     </div>

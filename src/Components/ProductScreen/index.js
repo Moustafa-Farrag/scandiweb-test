@@ -7,13 +7,12 @@ import getProduct from '../../GraphQLQueries/productQuery';
 import client from '../../GraphQLQueries/client';
 import GeneralTextAttributes from './Attributes/GeneralTextAttributes';
 import GeneralSwatchAttributes from './Attributes/GeneralSwatchAttributes';
-import Actions from '../../Actions';
+import Actions from '../../redux/Actions';
 import './ProductScreen.css';
 
 class ProductScreen extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props, 'my props');
         this.state = {
             loading: true,
             error: false,
@@ -38,7 +37,12 @@ class ProductScreen extends Component {
 
     handleOrderBtn(e) {
         console.log(this.state.product, this.state.selectedAttributes);
-        this.props.dispatch(Actions.shoppingCartAction.add_to_cart({ product: { ...this.state.product }, selectedAttributes: { ...this.state.selectedAttributes } }));
+        // quantity = 1 by default as not quantity option in this page 
+        this.props.dispatch(Actions.shoppingCartAction.add_to_cart({
+            product: { ...this.state.product },
+            selectedAttributes: { ...this.state.selectedAttributes },
+            quantity: 1
+        }));
     }
 
     async getProductDetails() {
@@ -73,7 +77,7 @@ class ProductScreen extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps !== this.props) {
+        if (prevProps.generalSetting !== this.props.generalSetting) {
             this.getProductDetails();
         }
     }
@@ -95,12 +99,15 @@ class ProductScreen extends Component {
                         <img src={this.state.product.gallery[this.state.selectedImgIndex]} alt="" className="item-selected-img" />
                     </div>
                     <div className="item-details">
+
                         <p className="product-brand-text">
                             {this.state.product.brand}
                         </p>
+
                         <p className="product-name-text">
                             {this.state.product.name}
                         </p>
+
                         {this.state.product.attributes.map(attribute =>
                             (attribute.type === 'text') ? (
                                 <GeneralTextAttributes
@@ -120,6 +127,7 @@ class ProductScreen extends Component {
                             <p className="price-text">price:</p>
                             <p className="price-value-text">{`${this.state.productPrice.amount} ${this.state.productPrice.currency.symbol}`}</p>
                         </section>
+
                         <div className="product-order">
                             <button onClick={this.handleOrderBtn} className="btn-add-to-cart">
                                 <p className="add-to-cart-text">ADD TO CART</p>

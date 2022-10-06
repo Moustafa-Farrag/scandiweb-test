@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import actions from '../../Actions';
 import ProductCart from '../ProductCard';
 import { getCategory } from '../../GraphQLQueries';
 import client from '../../GraphQLQueries/client';
@@ -25,7 +24,7 @@ class HomeScreen extends Component {
                 categoryName: { title: this.props.generalSetting.category }
             },
         }).then(cu => {
-            console.log(cu);
+            console.log(cu, this.props.generalSetting.category, 'cat' );
             this.setState({ products: cu.data.category.products });
         }
         ).catch(err => console.log(err));
@@ -34,6 +33,7 @@ class HomeScreen extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.generalSetting.category !== this.props.generalSetting.category) {
+            console.log('cat2')
             this.fetchAllProducts();
         }
     }
