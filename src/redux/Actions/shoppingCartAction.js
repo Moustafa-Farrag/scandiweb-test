@@ -14,6 +14,13 @@ const updating_product_quantity = (item) => {
     };
 };
 
+const updating_product_attributes = (item) => {
+    return {
+        type: "UPDATING_PRODUCT_ATTRIBUTE",
+        payload: item
+    };
+};
+
 
 const remove_from_cart = (item) => {
     return {
@@ -25,5 +32,6 @@ const remove_from_cart = (item) => {
 export default {
     add_to_cart,
     remove_from_cart,
-    updating_product_quantity
+    updating_product_quantity,
+    updating_product_attributes
 };

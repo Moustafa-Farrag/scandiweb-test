@@ -11,8 +11,15 @@ const state = (shoppingCart = [], action) => {
             // and (decreasing) is to add a product with quantity -1
             return addingProduct(shoppingCart, action).filter((item) => item.quantity > 0);
         case "UPDATING_PRODUCT_ATTRIBUTE":
-
-            return [...shoppingCart];
+            // getting target product  
+            // payload => {product, selectedAttributes(old one), newSelectedAttributes}
+            let duplicatedProductIndex = shoppingCart.findIndex((item) => JSON.stringify(action.payload.product) === JSON.stringify(item.product) && JSON.stringify(action.payload.selectedAttributes) === JSON.stringify(item.selectedAttributes));
+            let newShoppingCart = [...shoppingCart];
+            let newItem = { ...shoppingCart[duplicatedProductIndex] };
+            newItem.selectedAttributes = action.payload.newSelectedAttributes;
+            newShoppingCart.splice(duplicatedProductIndex, 1, newItem);
+            console.log(newShoppingCart, 'updating product attributes');
+            return [...newShoppingCart];
         default:
             console.log(shoppingCart, action.type, 'from state def');
             return shoppingCart;
@@ -22,6 +29,7 @@ const state = (shoppingCart = [], action) => {
 
 const addingProduct = (shoppingCart, action) => {
     // getting index of selected product by checking the same product and selected attributes 
+    // action payload => {product, selectedAttributes ,quantity(newOne)}
     let duplicatedProductIndex = shoppingCart.findIndex((item) => JSON.stringify(action.payload.product) === JSON.stringify(item.product) && JSON.stringify(action.payload.selectedAttributes) === JSON.stringify(item.selectedAttributes));
     if (duplicatedProductIndex !== -1) {
         let newShoppingCart = [...shoppingCart];

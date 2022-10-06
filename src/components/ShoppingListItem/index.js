@@ -21,19 +21,14 @@ class ShoppingListItem extends Component {
 
     handleAttributeClick(e, id, value) {
         // updating the attributes' obj by the selected value
-        let selectedAttributes = { ...this.state.selectedAttributes };
-        selectedAttributes[id] = value;
-        //this.props.dispatch
-        this.setState({ selectedAttributes });
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.generalSetting.currency !== this.props.generalSetting.currency) {
-            this.settingProductPrice();
-        }
-        if (prevProps !== this.props) {
-            this.fetchingProductDetails();
-        }
+        let newSelectedAttributes = { ...this.state.selectedAttributes };
+        newSelectedAttributes[id] = value;
+        this.props.dispatch(Actions.shoppingCartAction.updating_product_attributes({
+            product: this.state.product,
+            selectedAttributes: this.state.selectedAttributes,
+            newSelectedAttributes
+        }));
+        //this.setState({ selectedAttributes });
     }
 
     handleIncreasingQuantity() {
@@ -64,6 +59,15 @@ class ShoppingListItem extends Component {
 
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.generalSetting.currency !== this.props.generalSetting.currency) {
+            this.settingProductPrice();
+        }
+        if (prevProps !== this.props) {
+            this.fetchingProductDetails();
+        }
+    }
+
     componentDidMount() {
         this.fetchingProductDetails();
     }
@@ -74,28 +78,30 @@ class ShoppingListItem extends Component {
                 <div className="cart-container">
                     <div className="product-in-cart">
                         <section className="product-details">
-                            <p className="product-brand-text">
-                                {this.props.product.brand}
-                            </p>
-                            <p className="product-name-text">
-                                {this.props.product.name}
-                            </p>
-                            <p className="price-value-text">{`${this.state.productPrice.amount} ${this.state.productPrice.currency.symbol}`}</p>
-                            {
-                                this.props.product.attributes.map(attribute =>
-                                    (attribute.type === 'text') ? (
-                                        <GeneralTextAttributes
-                                            attribute={attribute}
-                                            handleAttributeClick={this.handleAttributeClick}
-                                            selectedAttributeValue={this.state.selectedAttributes[attribute.id]}
-                                        />) : (
-                                        <GeneralSwatchAttributes
-                                            attribute={attribute}
-                                            handleAttributeClick={this.handleAttributeClick}
-                                            selectedAttributeValue={this.state.selectedAttributes[attribute.id]}
-                                        />)
-                                )
-                            }
+                            <div className="text-direction">
+                                <p className="product-brand-text">
+                                    {this.props.product.brand}
+                                </p>
+                                <p className="product-name-text">
+                                    {this.props.product.name}
+                                </p>
+                                <p className="price-value-text">{`${this.state.productPrice.amount} ${this.state.productPrice.currency.symbol}`}</p>
+                                {
+                                    this.props.product.attributes.map(attribute =>
+                                        (attribute.type === 'text') ? (
+                                            <GeneralTextAttributes
+                                                attribute={attribute}
+                                                handleAttributeClick={this.handleAttributeClick}
+                                                selectedAttributeValue={this.state.selectedAttributes[attribute.id]}
+                                            />) : (
+                                            <GeneralSwatchAttributes
+                                                attribute={attribute}
+                                                handleAttributeClick={this.handleAttributeClick}
+                                                selectedAttributeValue={this.state.selectedAttributes[attribute.id]}
+                                            />)
+                                    )
+                                }
+                            </div>
                         </section>
                         <section className="quantity-imgs">
                             <section className="product-quantity">

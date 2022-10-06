@@ -146,3 +146,7 @@
     direction: rtl;
     padding-left: 15px;
 }
+
+.text-direction {
+    direction: ltr;
+}
