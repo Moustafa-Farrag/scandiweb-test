@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { graphql } from '@apollo/client/react/hoc';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
-import { getCategoriesNames, getCurrencies } from '../../GraphQLQueries';
+import { getCategoriesNames, getCurrencies } from '../../graphQLQueries';
 import generalSettingAction from '../../redux/Actions/generalSettingAction';
-import client from '../../GraphQLQueries/client';
+import client from '../../graphQLQueries/client';
 import $ from './assets/$.png';
 import logo from './assets/logo.png';
 import cart from './assets/cart-icon.png';
 import arrow from './assets/arrow-icon.png';
 import Actions from '../../redux/Actions';
+import { totalQuantity } from '../../helper/calculation';
 import './Navbar.css';
 
 class Navbar extends Component {
@@ -90,7 +91,7 @@ class Navbar extends Component {
                     </div>
                     <Link className='link-shopping-cart' to='/shopping-cart'>
                         {
-                            (this.props.shoppingCart.length) ? (<p className='shopping-cart-value'> {this.props.shoppingCart.length} </p>) : (<></>)
+                            (this.props.shoppingCart.length) ? (<p className='shopping-cart-value'> {totalQuantity(this.props.shoppingCart)} </p>) : (<></>)
                         }
                         <img src={cart} className="icon" alt="empty cart" />
                     </Link>

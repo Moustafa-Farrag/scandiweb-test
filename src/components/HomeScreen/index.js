@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import ProductCart from '../ProductCard';
-import { getCategory } from '../../GraphQLQueries';
-import client from '../../GraphQLQueries/client';
+import { getCategory } from '../../graphQLQueries';
+import client from '../../graphQLQueries/client';
 import './products.css';
 
 

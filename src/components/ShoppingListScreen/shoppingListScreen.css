@@ -64,13 +64,14 @@ hr {
 }
 
 
-/*.total-statistics {
+.total-statistics {
+    position: relative;
     display: flex;
-    justify-content: space-between;
-    width: 100px;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-.titles,
+/*.titles,
 .values {
     display: flex;
     flex-direction: column;
@@ -93,7 +94,7 @@ hr {
 .total-quantity-value,
 .total-price-value {
     position: absolute;
-    left: 200px;
+    left: 100px;
     display: inline;
     font-family: 'Raleway';
     font-style: normal;

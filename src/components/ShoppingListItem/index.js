@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import GeneralTextAttributes from "../ProductScreen/Attributes/GeneralTextAttributes";
 import GeneralSwatchAttributes from "../ProductScreen/Attributes/GeneralSwatchAttributes";
 import { connect } from "react-redux";
+import Actions from "../../redux/Actions";
 import './ShoppingListItem.css';
+import { getProductPrice } from "../../helper/calculation";
 
 class ShoppingListItem extends Component {
     constructor(props) {
@@ -21,6 +23,7 @@ class ShoppingListItem extends Component {
         // updating the attributes' obj by the selected value
         let selectedAttributes = { ...this.state.selectedAttributes };
         selectedAttributes[id] = value;
+        //this.props.dispatch
         this.setState({ selectedAttributes });
     }
 
@@ -28,27 +31,27 @@ class ShoppingListItem extends Component {
         if (prevProps.generalSetting.currency !== this.props.generalSetting.currency) {
             this.settingProductPrice();
         }
+        if (prevProps !== this.props) {
+            this.fetchingProductDetails();
+        }
     }
 
     handleIncreasingQuantity() {
-        this.setState({ quantity: this.state.quantity + 1 });
+        this.props.dispatch(Actions.shoppingCartAction.updating_product_quantity({ product: this.state.product, selectedAttributes: this.state.selectedAttributes, quantity: 1 }));
     }
 
     handleDecreasingQuantity() {
-        if (this.state.quantity === 1) {
-            return
-        }
-        this.setState({ quantity: this.state.quantity - 1 });
+        this.props.dispatch(Actions.shoppingCartAction.updating_product_quantity({ product: this.state.product, selectedAttributes: this.state.selectedAttributes, quantity: -1 }));
     }
 
     settingProductPrice() {
-        const productPrice = this.props.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency));
+        const productPrice = getProductPrice(this.props.product, this.props.generalSetting.currency);
         this.setState({ productPrice });
     }
 
     fetchingProductDetails() {
         // select the price currency of the product depending on the currency of the redux -> currency
-        const productPrice = this.props.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency));
+        const productPrice = getProductPrice(this.props.product, this.props.generalSetting.currency);
 
         // setting the loading, data, attributes' obj and product price
         this.setState({
@@ -98,7 +101,7 @@ class ShoppingListItem extends Component {
                             <section className="product-quantity">
                                 <button className="btn-increasing-quantity" onClick={() => this.handleIncreasingQuantity()}>+</button>
                                 <p className="product-quantity-value">{this.state.quantity}</p>
-                                <button className="btn-decreasing-quantity" onClick={() => this.handleIncreasingQuantity()}>-</button>
+                                <button className="btn-decreasing-quantity" onClick={() => this.handleDecreasingQuantity()}>-</button>
                             </section>
                             <div className="product-imgs-container">
                                 <img className="product-img" src={this.state.product.gallery[0]} alt=""></img>

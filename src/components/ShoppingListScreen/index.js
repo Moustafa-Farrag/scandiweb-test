@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ShoppingListItem from "../ShoppingListItem";
 import { connect } from "react-redux";
+import { totalQuantity } from "../../helper/calculation";
 import './shoppingListScreen.css';
 
 class ShoppingListScreen extends Component {
@@ -14,12 +15,11 @@ class ShoppingListScreen extends Component {
     }
 
     getShoppingList() {
-        console.log(this.props.shoppingCart, 'ffffffffff');
         this.setState({ loading: false, shoppingCart: this.props.shoppingCart });
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.getShoppingList !== this.props.getShoppingList) {
+        if (prevProps.shoppingCart !== this.props.shoppingCart) {
             this.getShoppingList();
         }
     }
@@ -29,11 +29,8 @@ class ShoppingListScreen extends Component {
     }
 
     componentWillUnmount() {
-
         console.log('will unmount');
     }
-
-
 
     render() {
         return (
@@ -47,13 +44,14 @@ class ShoppingListScreen extends Component {
                         {
                             this.state.shoppingCart.map(item => (
                                 <div>
-                                    <ShoppingListItem product={item.product} selectedAttributes={item.selectedAttributes} quantity={item.quantity} />
+                                    <ShoppingListItem
+                                        product={item.product}
+                                        selectedAttributes={item.selectedAttributes}
+                                        quantity={item.quantity} />
                                     <hr />
                                 </div>
                             ))
                         }
-                        {/*<ShoppingListItem brand_name="Apollo" product_name=" Running Short" quantity={2} />
-                    <hr />*/}
                         <section className="total-statistics">
                             <p className="tax">
                                 Tax 21%:
@@ -61,7 +59,7 @@ class ShoppingListScreen extends Component {
                             </p>
                             <p className="total-quantity">
                                 Quantity:
-                                <p className="total-quantity-value">3</p>
+                                <p className="total-quantity-value">{totalQuantity(this.state.shoppingCart)}</p>
                             </p>
                             <p className="total-price">
                                 Total:

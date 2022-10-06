@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import cart from './assets/cart-icon.png';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { getProductPrice } from '../../helper/calculation';
 import './products.css';
 
 class ProductCart extends Component {
@@ -15,7 +16,7 @@ class ProductCart extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.generalSetting.currency !== this.props.generalSetting.currency) {
-            this.setState({ productPrice: this.props.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency)) });
+            this.setState({ productPrice: getProductPrice(this.props.product, this.props.generalSetting.currency) });
         }
         if (prevProps.product !== this.props.product) {
             this.setState({ product: this.props.product });
@@ -26,7 +27,7 @@ class ProductCart extends Component {
         this.setState({
             loading: false,
             product: this.props.product,
-            productPrice: this.props.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency))
+            productPrice: getProductPrice(this.props.product, this.props.generalSetting.currency)
         });
     }
 

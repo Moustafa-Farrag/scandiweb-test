@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Navbar from './Components/Navbar';
-import HomeScreen from './Components/HomeScreen';
-import ProductScreen from './Components/ProductScreen';
+import Navbar from './components/Navbar';
+import HomeScreen from './components/HomeScreen';
+import ProductScreen from './components/ProductScreen';
 import './App.css';
-import ShoppingListScreen from './Components/ShoppingListScreen';
+import ShoppingListScreen from './components/ShoppingListScreen';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import client from './GraphQLQueries/client';
+import client from './graphQLQueries/client';
 
 
 class App extends Component {
