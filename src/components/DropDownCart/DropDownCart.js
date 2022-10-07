@@ -10,7 +10,8 @@ class DropDownCart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showDropDownCart: true
+            showDropDownCart: true,
+            totalPrice: totalPriceCalculation(this.props.shoppingCart, this.props.generalSetting.currency)
         };
         this.handelViewBagBtnClick = this.handelViewBagBtnClick.bind(this);
         this.handelOrderBtnClick = this.handelOrderBtnClick.bind(this);
@@ -47,8 +48,8 @@ class DropDownCart extends Component {
                                     />)
                             }
                             <div className='bag-total-price'>
-                                <p className='total-price-text'>Total</p>
-                                <p className='total-price-text'>{ }</p>
+                                <p className='total-price-text'>Total:</p>
+                                <p className='total-price-text'>{this.props.generalSetting.currency.Symbol + this.state.totalPrice.totalPrice}</p>
                             </div>
                             <div className="btn-group">
                                 <Link to="/shopping-cart" onClick={() => this.handelViewBagBtnClick()}>

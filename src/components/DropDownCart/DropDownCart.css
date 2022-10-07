@@ -75,6 +75,7 @@
 
 .bag-total-price {
     padding: 15px;
+    padding-right: 50px;
     margin: 0;
     text-align: left;
     display: flex;
