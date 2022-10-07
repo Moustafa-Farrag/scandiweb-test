@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import ShoppingListItem from "../ShoppingListItem";
-import { totalQuantity } from '../../helper/calculation';
+import { Link } from 'react-router-dom';
+import { totalPriceCalculation, totalQuantity } from '../../helper/calculation';
+import Actions from '../../redux/Actions';
 import './DropDownCart.css';
 
 class DropDownCart extends Component {
@@ -10,7 +12,23 @@ class DropDownCart extends Component {
         this.state = {
             showDropDownCart: true
         };
+        this.handelViewBagBtnClick = this.handelViewBagBtnClick.bind(this);
+        this.handelOrderBtnClick = this.handelOrderBtnClick.bind(this);
     }
+
+    handelOrderBtnClick() {
+        if (this.props.shoppingCart.length > 0) {
+            alert("Thanks for your Trust :)");
+            this.props.dispatch(Actions.shoppingCartAction.remove_from_cart());
+            return;
+        }
+        alert("No items in the cart :(");
+    }
+
+    handelViewBagBtnClick() {
+        this.props.dispatch(Actions.generalSettingAction.set_bag_overlay(!this.props.generalSetting.bagOverlay));
+    }
+
     render() {
         return (
             <div>
@@ -28,9 +46,15 @@ class DropDownCart extends Component {
                                         selectedAttributes={item.selectedAttributes}
                                     />)
                             }
+                            <div className='bag-total-price'>
+                                <p className='total-price-text'>Total</p>
+                                <p className='total-price-text'>{ }</p>
+                            </div>
                             <div className="btn-group">
-                                <button className='btn-view-bag'>  VIEW BAG </button>
-                                <button className='btn-check-out'> CHECK OUT </button>
+                                <Link to="/shopping-cart" onClick={() => this.handelViewBagBtnClick()}>
+                                    <button className='btn-view-bag'>  VIEW BAG </button>
+                                </Link>
+                                <button className='btn-check-out' onClick={() => this.handelOrderBtnClick()}> CHECK OUT </button>
                             </div>
                         </div >
                     )

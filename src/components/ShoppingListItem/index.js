@@ -32,11 +32,19 @@ class ShoppingListItem extends Component {
     }
 
     handleIncreasingQuantity() {
-        this.props.dispatch(Actions.shoppingCartAction.updating_product_quantity({ product: this.state.product, selectedAttributes: this.state.selectedAttributes, quantity: 1 }));
+        this.props.dispatch(Actions.shoppingCartAction.updating_product_quantity({
+            product: this.state.product,
+            selectedAttributes: this.state.selectedAttributes,
+            quantity: 1
+        }));
     }
 
     handleDecreasingQuantity() {
-        this.props.dispatch(Actions.shoppingCartAction.updating_product_quantity({ product: this.state.product, selectedAttributes: this.state.selectedAttributes, quantity: -1 }));
+        this.props.dispatch(Actions.shoppingCartAction.updating_product_quantity({
+            product: this.state.product,
+            selectedAttributes: this.state.selectedAttributes,
+            quantity: -1
+        }));
     }
 
     settingProductPrice() {
@@ -85,7 +93,7 @@ class ShoppingListItem extends Component {
                                 <p className="product-name-text">
                                     {this.props.product.name}
                                 </p>
-                                <p className="price-value-text">{`${this.state.productPrice.amount} ${this.state.productPrice.currency.symbol}`}</p>
+                                <p className="price-value-text">{`${this.state.productPrice.currency.symbol}${this.state.productPrice.amount}`}</p>
                                 {
                                     this.props.product.attributes.map(attribute =>
                                         (attribute.type === 'text') ? (

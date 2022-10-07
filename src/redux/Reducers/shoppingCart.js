@@ -3,7 +3,7 @@ const state = (shoppingCart = [], action) => {
         case "ADD_TO_CART":
             return addingProduct(shoppingCart, action);
         case "REMOVE_FROM_CART":
-            return shoppingCart.filter((item) => item.id !== action.payload);
+            return [];
         case "UPDATE_CART_ITEM":
             return [...shoppingCart];
         case "UPDATING_PRODUCT_QUANTITY":
@@ -18,10 +18,8 @@ const state = (shoppingCart = [], action) => {
             let newItem = { ...shoppingCart[duplicatedProductIndex] };
             newItem.selectedAttributes = action.payload.newSelectedAttributes;
             newShoppingCart.splice(duplicatedProductIndex, 1, newItem);
-            console.log(newShoppingCart, 'updating product attributes');
             return [...newShoppingCart];
         default:
-            console.log(shoppingCart, action.type, 'from state def');
             return shoppingCart;
     }
 };

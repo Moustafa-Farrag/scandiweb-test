@@ -89,6 +89,7 @@ class ProductScreen extends Component {
         return (
             (this.state.loading) ? (<p> loading .. </p>) : (
                 <section className="item-screen">
+                    {(this.props.generalSetting.bagOverlay) && (<div className='bag-cart-overlay'></div>)}
                     <ProductGallery
                         gallery={this.state.product.gallery}
                         handleImgClick={this.handleImgClick}
@@ -124,7 +125,7 @@ class ProductScreen extends Component {
 
                         <section className="product-price">
                             <p className="price-text">Price:</p>
-                            <p className="price-value-text">{`${this.state.productPrice.amount} ${this.state.productPrice.currency.symbol}`}</p>
+                            <p className="price-value-text">{`${this.state.productPrice.currency.symbol}${this.state.productPrice.amount}`}</p>
                         </section>
 
                         <div className="product-order">

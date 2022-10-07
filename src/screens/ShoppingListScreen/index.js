@@ -3,6 +3,7 @@ import ShoppingListItem from "../../components/ShoppingListItem";
 import { connect } from "react-redux";
 import { totalPriceCalculation, totalQuantity } from "../../helper/calculation";
 import './shoppingListScreen.css';
+import Actions from "../../redux/Actions";
 
 class ShoppingListScreen extends Component {
     constructor(props) {
@@ -23,6 +24,15 @@ class ShoppingListScreen extends Component {
             currency: this.props.generalSetting.currency
         });
         console.log(this.props.generalSetting.currency);
+    }
+
+    handelBtnOrderClick() {
+        if (this.state.shoppingCart.length > 0) {
+            alert("Thanks for your Trust :)");
+            this.props.dispatch(Actions.shoppingCartAction.remove_from_cart());
+            return;
+        }
+        alert("No items in the cart :(");
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -46,6 +56,7 @@ class ShoppingListScreen extends Component {
         return (
             (!this.state.loading) ? (
                 <div>
+                    {(this.props.generalSetting.bagOverlay) && (<div className='bag-cart-overlay'></div>)}
                     <p className="cart-text">
                         CART
                     </p>
@@ -66,18 +77,18 @@ class ShoppingListScreen extends Component {
                         <section className="total-statistics">
                             <p className="tax">
                                 Tax 21%:
-                                <p className="tax-value">{this.state.overAllPrices.taxes.toFixed(2) + " " + this.state.currency.Symbol}</p>
+                                <p className="tax-value">{this.state.currency.Symbol + this.state.overAllPrices.taxes.toFixed(2)}</p>
                             </p>
                             <p className="total-quantity">
                                 Quantity:
-                                <p className="total-quantity-value">{`${totalQuantity(this.state.shoppingCart)} ${this.state.currency.Symbol}`}</p>
+                                <p className="total-quantity-value">{`${totalQuantity(this.state.shoppingCart)}`}</p>
                             </p>
                             <p className="total-price">
                                 Total:
-                                <p className="total-price-value">{`${this.state.overAllPrices.totalPrice.toFixed(2)} ${this.state.currency.Symbol}`}</p>
+                                <p className="total-price-value">{`${this.state.currency.Symbol}${this.state.overAllPrices.totalPrice.toFixed(2)}`}</p>
                             </p>
                         </section>
-                        <button className="btn-order">
+                        <button className="btn-order" onClick={() => this.handelBtnOrderClick()}>
                             ORDER
                         </button>
                     </section>

@@ -12,7 +12,16 @@ const set_currency = (currency_name) => {
     };
 };
 
+const set_bag_overlay = (bagOverlay) => {
+    return {
+        type: "SET_BAG_OVERLAY",
+        payload: bagOverlay
+    };
+
+};
+
 export default {
     set_category,
-    set_currency
+    set_currency,
+    set_bag_overlay
 };

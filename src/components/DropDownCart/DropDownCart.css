@@ -6,7 +6,7 @@
     margin: 10px;
     background-color: #FFFFFF;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    z-index: 2;
+    z-index: 3;
 }
 
 .bag-items {
@@ -66,4 +66,26 @@
     font-size: 14px;
     line-height: 120%;
     cursor: pointer;
+}
+
+.btn-check-out:active,
+.btn-view-bag:active {
+    scale: 0.98;
+}
+
+.bag-total-price {
+    padding: 15px;
+    margin: 0;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-price-text {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 160%;
+    margin: 0;
 }

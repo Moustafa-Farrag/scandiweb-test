@@ -8,7 +8,6 @@ import './products.css';
 class ProductCart extends Component {
     constructor(props) {
         super(props);
-        console.log(props.product, 'hi');
         this.state = {
             loading: true
         };
@@ -44,7 +43,7 @@ class ProductCart extends Component {
                         <img src={this.state.product.gallery[0]} alt="product" className="card-img" />
                     </div>
                     <p className="product-card-name">{this.state.product.name}</p>
-                    <p className="product-card-price">{`${this.state.productPrice.amount} ${this.state.productPrice.currency.symbol}`}</p>
+                    <p className="product-card-price">{`${this.state.productPrice.currency.symbol}${this.state.productPrice.amount}`}</p>
                     <Link className="link" to={"/product/" + this.state.product.id}>
                         <img src={cart} className="icon-addToCart" alt="cart icon" />
                     </Link>

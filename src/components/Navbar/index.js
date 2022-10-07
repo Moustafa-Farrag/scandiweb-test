@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { graphql } from '@apollo/client/react/hoc';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
+import { totalPriceCalculation, totalQuantity } from '../../helper/calculation';
 import { getCategoriesNames, getCurrencies } from '../../graphQLQueries';
 import generalSettingAction from '../../redux/Actions/generalSettingAction';
 import client from '../../graphQLQueries/client';
+import DropDownCart from '../DropDownCart/DropDownCart';
 import $ from './assets/$.png';
 import logo from './assets/logo.png';
 import cart from './assets/cart-icon.png';
 import arrow from './assets/arrow-icon.png';
 import Actions from '../../redux/Actions';
-import { totalQuantity } from '../../helper/calculation';
 import './Navbar.css';
-import DropDownCart from '../DropDownCart/DropDownCart';
 
 class Navbar extends Component {
     constructor(props) {
@@ -21,11 +21,13 @@ class Navbar extends Component {
             categories: [],
             currencies: [],
             selectedCategoryIndex: 0,
-            showCurrencies: false
+            showCurrencies: false,
+            bagOverlay: this.props.generalSetting.bagOverlay
         };
         this.fetchAllCurrencies = this.fetchAllCurrencies.bind(this);
         this.handelCurrencyIconOnClick = this.handelCurrencyIconOnClick.bind(this);
         this.handelCurrencyOptionOnClick = this.handelCurrencyOptionOnClick.bind(this);
+        this.handelShoppingCartIconClick = this.handelShoppingCartIconClick.bind(this);
     }
 
     async fetchAllCurrencies() {
@@ -58,10 +60,17 @@ class Navbar extends Component {
         this.props.dispatch(Actions.generalSettingAction.set_currency(value));
     }
 
+    handelShoppingCartIconClick() {
+        this.props.dispatch(Actions.generalSettingAction.set_bag_overlay(!this.props.generalSetting.bagOverlay));
+    }
+
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.getCategoriesNames.loading !== this.props.getCategoriesNames.loading) {
             this.getNavbarCategories();
+        } else if (prevProps.generalSetting.bagOverlay !== this.props.generalSetting.bagOverlay) {
+            this.setState({ bagOverlay: this.props.generalSetting.bagOverlay });
         }
+
     }
 
     componentDidMount() {
@@ -93,13 +102,13 @@ class Navbar extends Component {
                             style={{ transform: (this.state.showCurrencies) ? "rotate(0deg)" : "rotate(180deg)" }}
                             alt="currency" />
                     </div>
-                    <Link className='link-shopping-cart' to='/shopping-cart'>
+                    <div className='link-shopping-cart' onClick={() => this.handelShoppingCartIconClick()} >
                         {
                             (this.props.shoppingCart.length > 0) &&
                             (<p className='shopping-cart-value'> {totalQuantity(this.props.shoppingCart)} </p>)
                         }
                         <img src={cart} className="icon" alt="empty cart" />
-                    </Link>
+                    </div>
                     < div class="dropdown-currencies" style={{ visibility: (this.state.showCurrencies) ? 'visible' : 'hidden' }} >
                         {
                             this.state.currencies.map(currency => (
@@ -109,7 +118,7 @@ class Navbar extends Component {
                             ))
                         }
                     </div>
-                    <DropDownCart />
+                    {(this.state.bagOverlay) && (<DropDownCart />)}
                 </div>
             </header >
         );

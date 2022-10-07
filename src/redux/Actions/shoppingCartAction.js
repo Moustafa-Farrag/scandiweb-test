@@ -22,10 +22,9 @@ const updating_product_attributes = (item) => {
 };
 
 
-const remove_from_cart = (item) => {
+const remove_from_cart = () => {
     return {
         type: "REMOVE_FROM_CART",
-        payload: item
     };
 };
 

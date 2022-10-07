@@ -71,12 +71,6 @@ hr {
     align-items: flex-start;
 }
 
-/*.titles,
-.values {
-    display: flex;
-    flex-direction: column;
-}*/
-
 .tax,
 .total-quantity,
 .total-price {
@@ -90,6 +84,17 @@ hr {
     margin: 10px;
     width: 100%;
     text-align: left;
+}
+
+.bag-cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: lightgray;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
 }
 
 .tax-value,
