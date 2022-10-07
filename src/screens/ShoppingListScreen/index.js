@@ -23,7 +23,6 @@ class ShoppingListScreen extends Component {
             overAllPrices: totalPriceCalculation(this.props.shoppingCart, this.props.generalSetting.currency),
             currency: this.props.generalSetting.currency
         });
-        console.log(this.props.generalSetting.currency);
     }
 
     handelBtnOrderClick() {
@@ -46,10 +45,6 @@ class ShoppingListScreen extends Component {
 
     componentDidMount() {
         this.getShoppingList();
-    }
-
-    componentWillUnmount() {
-        console.log('will unmount');
     }
 
     render() {
@@ -98,7 +93,6 @@ class ShoppingListScreen extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state, 'from mapState');
     const shoppingCart = state.shoppingCart;
     const generalSetting = state.generalSetting;
     return {

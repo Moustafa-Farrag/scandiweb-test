@@ -34,7 +34,6 @@ const addingProduct = (shoppingCart, action) => {
         let newItem = { ...shoppingCart[duplicatedProductIndex] };
         newItem.quantity += action.payload.quantity;
         newShoppingCart.splice(duplicatedProductIndex, 1, newItem);
-        console.log(newShoppingCart, 'new');
         return [...newShoppingCart];
     }
     return [...shoppingCart, action.payload];

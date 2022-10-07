@@ -18,6 +18,8 @@ This project was part of Scandiweb Junior Developer test assignment!
 
 &nbsp;&nbsp;&nbsp;&nbsp;For running the project then open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+&nbsp;&nbsp;&nbsp;&nbsp;Note: maybe you need to install some fonts to have the target view.
+
 ## Implemented features?
 
 - &#9745; Ability to add/remove products and change their amounts in cart - on the cart page itself, PLP and PDP should be provided.

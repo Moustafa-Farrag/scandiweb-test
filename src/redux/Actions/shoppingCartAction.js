@@ -1,5 +1,4 @@
 const add_to_cart = (item) => {
-    console.log(item, 'action');
     return {
         type: "ADD_TO_CART",
         payload: item

@@ -9,8 +9,6 @@ import './products.css';
 class HomeScreen extends Component {
     constructor(props) {
         super(props);
-        console.log(props, 'pros');
-        console.log(this.state, 'state');
         this.state = {
             products: [],
             loading: true

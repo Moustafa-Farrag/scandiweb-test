@@ -129,7 +129,6 @@ class ShoppingListItem extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state, 'from mapState');
     const shoppingCart = state.shoppingCart;
     const generalSetting = state.generalSetting;
     return {

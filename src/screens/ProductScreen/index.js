@@ -35,7 +35,6 @@ class ProductScreen extends Component {
     }
 
     handleOrderBtn(e) {
-        console.log(this.state.product, this.state.selectedAttributes);
         // quantity = 1 by default as not quantity option in this page 
         this.props.dispatch(Actions.shoppingCartAction.add_to_cart({
             product: { ...this.state.product },
@@ -49,7 +48,6 @@ class ProductScreen extends Component {
             query: getProduct,
             variables: { id: this.props.id },
         }).then(cu => {
-            console.log(cu.data.product.attributes, 'check');
             /*
              selected attributes reflect the attributes choices which user took
              it is an object key => attributes' ids,  value => user choice
