@@ -39,7 +39,7 @@ class ShoppingListScreen extends Component {
             this.getShoppingList();
         }
         if (prevProps.generalSetting.currency !== this.props.generalSetting.currency) {
-            this.setState({ currency: this.props });
+            this.getShoppingList();
         }
     }
 
@@ -72,7 +72,7 @@ class ShoppingListScreen extends Component {
                         <section className="total-statistics">
                             <p className="tax">
                                 Tax 21%:
-                                <p className="tax-value">{this.state.currency.Symbol + this.state.overAllPrices.taxes.toFixed(2)}</p>
+                                <p className="tax-value">{this.state.currency.symbol + this.state.overAllPrices.taxes.toFixed(2)}</p>
                             </p>
                             <p className="total-quantity">
                                 Quantity:
@@ -80,7 +80,7 @@ class ShoppingListScreen extends Component {
                             </p>
                             <p className="total-price">
                                 Total:
-                                <p className="total-price-value">{`${this.state.currency.Symbol}${this.state.overAllPrices.totalPrice.toFixed(2)}`}</p>
+                                <p className="total-price-value">{`${this.state.currency.symbol}${this.state.overAllPrices.totalPrice.toFixed(2)}`}</p>
                             </p>
                         </section>
                         <button className="btn-order" onClick={() => this.handelBtnOrderClick()}>
