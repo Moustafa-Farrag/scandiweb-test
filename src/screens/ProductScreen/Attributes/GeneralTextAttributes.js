@@ -1,5 +1,5 @@
 import React from "react";
-import '../ProductScreen.css';
+import './Attributes.css';
 
 function GeneralTextAttributes({ attribute, handleAttributeClick, selectedAttributeValue }) {
     return (

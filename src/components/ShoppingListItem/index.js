@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import GeneralTextAttributes from "../ProductScreen/Attributes/GeneralTextAttributes";
-import GeneralSwatchAttributes from "../ProductScreen/Attributes/GeneralSwatchAttributes";
+import GeneralTextAttributes from "../../screens/ProductScreen/Attributes/GeneralTextAttributes";
+import GeneralSwatchAttributes from "../../screens/ProductScreen/Attributes/GeneralSwatchAttributes";
 import { connect } from "react-redux";
 import Actions from "../../redux/Actions";
 import './ShoppingListItem.css';
@@ -46,7 +46,7 @@ class ShoppingListItem extends Component {
 
     fetchingProductDetails() {
         // select the price currency of the product depending on the currency of the redux -> currency
-        const productPrice = getProductPrice(this.props.product, this.props.generalSetting.currency);
+        const productPrice = getProductPrice(this.props.product, this.props.generalSetting.currency.label);
 
         // setting the loading, data, attributes' obj and product price
         this.setState({

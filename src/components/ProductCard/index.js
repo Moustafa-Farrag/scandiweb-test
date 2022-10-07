@@ -27,7 +27,7 @@ class ProductCart extends Component {
         this.setState({
             loading: false,
             product: this.props.product,
-            productPrice: getProductPrice(this.props.product, this.props.generalSetting.currency)
+            productPrice: getProductPrice(this.props.product, this.props.generalSetting.currency.label)
         });
     }
 

@@ -88,6 +88,8 @@ hr {
     line-height: 28px;
     display: inline;
     margin: 10px;
+    width: 100%;
+    text-align: left;
 }
 
 .tax-value,

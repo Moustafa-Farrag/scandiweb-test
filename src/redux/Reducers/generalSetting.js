@@ -1,4 +1,4 @@
-const state = (state = { category: "all", currency: "USD" }, action) => {
+const state = (state = { category: "all", currency: {label: "USD", Symbol: "$"} }, action) => {
     switch (action.type) {
         case "SET_CATEGORY":
             console.log(action.payload);

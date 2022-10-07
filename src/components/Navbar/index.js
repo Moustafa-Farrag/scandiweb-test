@@ -12,6 +12,7 @@ import arrow from './assets/arrow-icon.png';
 import Actions from '../../redux/Actions';
 import { totalQuantity } from '../../helper/calculation';
 import './Navbar.css';
+import DropDownCart from '../DropDownCart/DropDownCart';
 
 class Navbar extends Component {
     constructor(props) {
@@ -87,23 +88,28 @@ class Navbar extends Component {
                 <div className="container-icons">
                     <div className='currency-container' onClick={(e) => this.handelCurrencyIconOnClick()}>
                         <img src={$} className="icon" alt="currency" />
-                        <img src={arrow} className="icon arrow" style={{ transform: (this.state.showCurrencies) ? "rotate(0deg)" : "rotate(180deg)" }} alt="currency" />
+                        <img src={arrow}
+                            className="icon arrow"
+                            style={{ transform: (this.state.showCurrencies) ? "rotate(0deg)" : "rotate(180deg)" }}
+                            alt="currency" />
                     </div>
                     <Link className='link-shopping-cart' to='/shopping-cart'>
                         {
-                            (this.props.shoppingCart.length) ? (<p className='shopping-cart-value'> {totalQuantity(this.props.shoppingCart)} </p>) : (<></>)
+                            (this.props.shoppingCart.length > 0) &&
+                            (<p className='shopping-cart-value'> {totalQuantity(this.props.shoppingCart)} </p>)
                         }
                         <img src={cart} className="icon" alt="empty cart" />
                     </Link>
                     < div class="dropdown-currencies" style={{ visibility: (this.state.showCurrencies) ? 'visible' : 'hidden' }} >
                         {
                             this.state.currencies.map(currency => (
-                                <div className='currency-item' onClick={(e) => this.handelCurrencyOptionOnClick(e, currency.label)}>
+                                <div className='currency-item' onClick={(e) => this.handelCurrencyOptionOnClick(e, { label: currency.label, symbol: currency.symbol })}>
                                     <p className='currency-text'>{`${currency.label}  ${currency.symbol}`}</p>
                                 </div>
                             ))
                         }
                     </div>
+                    <DropDownCart />
                 </div>
             </header >
         );

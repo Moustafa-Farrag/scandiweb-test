@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
 import { Interweave } from 'interweave';
 import ProductGallery from './ProductGallery';
 import getProduct from '../../graphQLQueries/productQuery';
@@ -63,7 +62,7 @@ class ProductScreen extends Component {
             }, {});
 
             // select the price currency of the product depending on the currency of the redux -> currency
-            const productPrice = cu.data.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency));
+            const productPrice = cu.data.product.prices.find((price) => (price.currency.label === this.props.generalSetting.currency.label));
 
             // setting the loading, data, attributes' obj and product price
             this.setState({
@@ -124,7 +123,7 @@ class ProductScreen extends Component {
                         }
 
                         <section className="product-price">
-                            <p className="price-text">price:</p>
+                            <p className="price-text">Price:</p>
                             <p className="price-value-text">{`${this.state.productPrice.amount} ${this.state.productPrice.currency.symbol}`}</p>
                         </section>
 

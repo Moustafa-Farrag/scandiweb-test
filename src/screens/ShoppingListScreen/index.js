@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import ShoppingListItem from "../ShoppingListItem";
+import ShoppingListItem from "../../components/ShoppingListItem";
 import { connect } from "react-redux";
-import { totalQuantity } from "../../helper/calculation";
+import { totalPriceCalculation, totalQuantity } from "../../helper/calculation";
 import './shoppingListScreen.css';
 
 class ShoppingListScreen extends Component {
@@ -9,18 +9,28 @@ class ShoppingListScreen extends Component {
         super(props);
         this.state = {
             loading: true,
-            shoppingCart: []
+            shoppingCart: [],
+            currency: this.props.generalSetting.currency
         };
         this.getShoppingList = this.getShoppingList.bind(this);
     }
 
     getShoppingList() {
-        this.setState({ loading: false, shoppingCart: this.props.shoppingCart });
+        this.setState({
+            loading: false,
+            shoppingCart: this.props.shoppingCart,
+            overAllPrices: totalPriceCalculation(this.props.shoppingCart, this.props.generalSetting.currency),
+            currency: this.props.generalSetting.currency
+        });
+        console.log(this.props.generalSetting.currency);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.shoppingCart !== this.props.shoppingCart) {
             this.getShoppingList();
+        }
+        if (prevProps.generalSetting.currency !== this.props.generalSetting.currency) {
+            this.setState({ currency: this.props });
         }
     }
 
@@ -47,7 +57,8 @@ class ShoppingListScreen extends Component {
                                     <ShoppingListItem
                                         product={item.product}
                                         selectedAttributes={item.selectedAttributes}
-                                        quantity={item.quantity} />
+                                        quantity={item.quantity}
+                                    />
                                     <hr />
                                 </div>
                             ))
@@ -55,15 +66,15 @@ class ShoppingListScreen extends Component {
                         <section className="total-statistics">
                             <p className="tax">
                                 Tax 21%:
-                                <p className="tax-value">$42.00</p>
+                                <p className="tax-value">{this.state.overAllPrices.taxes.toFixed(2) + " " + this.state.currency.Symbol}</p>
                             </p>
                             <p className="total-quantity">
                                 Quantity:
-                                <p className="total-quantity-value">{totalQuantity(this.state.shoppingCart)}</p>
+                                <p className="total-quantity-value">{`${totalQuantity(this.state.shoppingCart)} ${this.state.currency.Symbol}`}</p>
                             </p>
                             <p className="total-price">
                                 Total:
-                                <p className="total-price-value">$200.00</p>
+                                <p className="total-price-value">{`${this.state.overAllPrices.totalPrice.toFixed(2)} ${this.state.currency.Symbol}`}</p>
                             </p>
                         </section>
                         <button className="btn-order">

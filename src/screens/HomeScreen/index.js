@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import ProductCart from '../ProductCard';
 import { getCategory } from '../../graphQLQueries';
+import ProductCard from '../../components/ProductCard';
 import client from '../../graphQLQueries/client';
 import './products.css';
 
@@ -51,7 +51,7 @@ class HomeScreen extends Component {
                 </p>
                 <div className="container-products">
                     {
-                        this.state.products.map(product => <ProductCart product={product} />)
+                        this.state.products.map(product => <ProductCard product={product} />)
                     }
                 </div>
             </div >
