@@ -33,3 +33,6 @@ This project was part of Scandiweb Junior Developer test assignment!
 ## Decision I made
 
 As the layout not showing all the options, I made some small decision to overcome this problem ex(using scroll in some positions, making cart overlay more bigger)
+
+## Screen recoding
+screenRecoding folder has a recorded video

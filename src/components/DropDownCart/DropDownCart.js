@@ -30,6 +30,15 @@ class DropDownCart extends Component {
         this.props.dispatch(Actions.generalSettingAction.set_bag_overlay(!this.props.generalSetting.bagOverlay));
     }
 
+    componentDidUpdate(prevProps, prevState){
+        if(this.props.shoppingCart !== prevProps.shoppingCart){
+            this.setState({
+                showDropDownCart: true,
+                totalPrice: totalPriceCalculation(this.props.shoppingCart, this.props.generalSetting.currency)
+            });
+        }
+    }
+
     render() {
         return (
             <div>
@@ -49,7 +58,7 @@ class DropDownCart extends Component {
                             }
                             <div className='bag-total-price'>
                                 <p className='total-price-text'>Total:</p>
-                                <p className='total-price-text'>{this.props.generalSetting.currency.Symbol + this.state.totalPrice.totalPrice}</p>
+                                <p className='total-price-text'>{this.props.generalSetting.currency.symbol + this.state.totalPrice.totalPrice}</p>
                             </div>
                             <div className="btn-group">
                                 <Link to="/shopping-cart" onClick={() => this.handelViewBagBtnClick()}>
